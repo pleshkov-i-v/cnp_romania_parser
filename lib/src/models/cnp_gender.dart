@@ -1,0 +1,4 @@
+enum CnpGender {
+  male,
+  female,
+}

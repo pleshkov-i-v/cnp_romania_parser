@@ -1,0 +1,1 @@
+class InvalidCnpException implements Exception {}
