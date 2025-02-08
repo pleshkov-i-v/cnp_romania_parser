@@ -5,10 +5,17 @@ void main() {
 
   var result = parser.parse('1234567890123');
   var values = result.values;
-  print('1234567890123 -> isValid: ${result.isValid}'); //resurns false
+  print('Result for invalid CNP: 1234567890123');
+  print('IsValid: ${result.isValid}');
+  print('Values: ${result.values}');
 
   result = parser.parse('1740501415486');
-  values = result.values;
-  print(
-      '1234567890123 -> isValid: ${result.isValid}, DOB: ${values?.dateOfBirth}'); //resurns true
+  values = result.values!;
+  print('Result for valid CNP: 1740501415486');
+  print('IsValid: ${result.isValid}');
+  print('DOB: ${values.dateOfBirth}');
+  print('County code: ${values.county.index}');
+  print('County ISO code: ${values.county.iso}');
+  print('County name: ${values.county.name}');
+  print('Serial number: ${values.serialNumber.stringValue}');
 }

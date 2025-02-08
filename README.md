@@ -1,39 +1,64 @@
-<!-- 
-This README describes the package. If you publish this package to pub.dev,
-this README's contents appear on the landing page for your package.
+# CNP parser
 
-For information about how to write a good package README, see the guide for
-[writing package pages](https://dart.dev/tools/pub/writing-package-pages). 
+A parser for C.N.P. (short for ***C***od ***N***umeric ***P***ersonal or *Personal Identification Number*).
 
-For general information about developing packages, see the Dart guide for
-[creating packages](https://dart.dev/guides/libraries/create-packages)
-and the Flutter guide for
-[developing packages and plugins](https://flutter.dev/to/develop-packages). 
--->
-
-TODO: Put a short description of the package here that helps potential users
-know whether this package might be useful for them.
-
-## Features
-
-TODO: List what your package can do. Maybe include images, gifs, or videos.
-
-## Getting started
-
-TODO: List prerequisites and provide or point to information on how to
-start using the package.
+C.N.P. is a 13 digit unique number assigned to Romanian people at birth and to residents.
 
 ## Usage
 
-TODO: Include short and useful examples for package users. Add longer examples
-to `/example` folder. 
+This package provides an easy way to parse Romanian CNP (Personal Numeric Code). Here’s an example of how to use the CnpRomaniaParser to parse a CNP and validate it:
 
 ```dart
-const like = 'sample';
+final parser = CnpRomaniaParser();
+final result = parser.parse('1740501415486');  // Replace with the CNP you want to parse
+final isValid = result.isValid;
 ```
 
-## Additional information
+## Examples
 
-TODO: Tell users more about the package: where to find more information, how to 
-contribute to the package, how to file issues, what response they can expect 
-from the package authors, and more.
+### Valid CNP
+
+```dart
+final parser = CnpRomaniaParser();
+final result = parser.parse('1740501415486');  // Replace with the CNP you want to parse
+final values = values = result.values!;
+print('Result for valid CNP: 1740501415486');
+print('IsValid: ${result.isValid}');
+print('DOB: ${values.dateOfBirth}');
+print('County code: ${values.county.index}');
+print('County ISO code: ${values.county.iso}');
+print('County name: ${values.county.name}');
+print('Serial number: ${values.serialNumber.stringValue}');
+```
+
+Result:
+
+```log
+1740501415486 -> isValid: false
+Result for valid CNP: 1740501415486
+IsValid: true
+DOB: 1974-05-01 00:00:00.000
+County code: 41
+County ISO code: B
+County name: București Sector 1
+Serial number: 548
+```
+
+### Invalid CNP
+
+```dart
+var result = parser.parse('1234567890123');
+var values = result.values;
+print('Result for invalid CNP: 1234567890123');
+print('IsValid: ${result.isValid}');
+print('Values: ${result.values}');
+```
+
+Result:
+
+```log
+1234567890123 -> isValid: false
+Result for valid CNP: 1234567890123
+IsValid: false
+Values: null
+```
