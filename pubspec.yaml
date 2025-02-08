@@ -1,7 +1,7 @@
 name: cnp_romania_parser
-description: A starting point for Dart libraries or applications.
-version: 1.0.0
-# repository: https://github.com/my_org/my_repo
+description: A parser for C.N.P. (short for Cod Numeric Personal or Personal Identification Number).
+version: 0.0.1
+repository: https://github.com/pleshkov-i-v/cnp_romania_parser
 
 environment:
   sdk: ^3.6.1
