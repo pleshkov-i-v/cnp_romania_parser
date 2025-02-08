@@ -2,6 +2,13 @@ name: cnp_romania_parser
 description: A parser for C.N.P. (short for Cod Numeric Personal or Personal Identification Number).
 version: 0.0.1
 repository: https://github.com/pleshkov-i-v/cnp_romania_parser
+platforms:
+  android:
+  ios:
+  linux:
+  macos:
+  web:
+  windows:
 
 environment:
   sdk: ^3.3.0
@@ -10,5 +17,5 @@ environment:
 # dependencies:
 
 dev_dependencies:
-  # lints: ^5.0.0
+  lints: ^4.0.0
   test: ^1.24.0
