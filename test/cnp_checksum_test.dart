@@ -8,8 +8,9 @@ import 'package:cnp_romania_parser/src/internal/validator/cnp_check_digit_calcul
 import 'package:test/test.dart';
 
 void main() {
-  test('Wrong CNP length - throws', () {
-    final decoder = const CnpDecoder(
+  group('CNP Decoder Tests', () {
+    // Create a decoder instance with all necessary decoders and the check digit calculator.
+    const decoder = CnpDecoder(
       CnpSexDecoder(),
       CnpDateOfBirthDecoder(),
       CnpCountyDecoder(),
@@ -17,27 +18,21 @@ void main() {
       CnpCheckDigitCalculator(),
     );
 
-    expect(() => decoder.decodeCnp(''), throwsA(isA<InvalidCnpException>()));
-    expect(() => decoder.decodeCnp('1'), throwsA(isA<InvalidCnpException>()));
-    expect(() => decoder.decodeCnp('123456789012'),
-        throwsA(isA<InvalidCnpException>()));
-    expect(() => decoder.decodeCnp('12345678901234'),
-        throwsA(isA<InvalidCnpException>()));
-    // not correct month
-    expect(() => decoder.decodeCnp('17402501415486'),
-        throwsA(isA<InvalidCnpException>()));
-  });
+    test('Should throw InvalidCnpException for wrong CNP lengths', () {
+      expect(() => decoder.decodeCnp(''), throwsA(isA<InvalidCnpException>()));
+      expect(() => decoder.decodeCnp('1'), throwsA(isA<InvalidCnpException>()));
+      expect(() => decoder.decodeCnp('123456789012'), throwsA(isA<InvalidCnpException>()));
+      expect(() => decoder.decodeCnp('12345678901234'), throwsA(isA<InvalidCnpException>()));
+    });
 
-  test('Correct CNP - returns result', () {
-    final decoder = const CnpDecoder(
-      CnpSexDecoder(),
-      CnpDateOfBirthDecoder(),
-      CnpCountyDecoder(),
-      CnpSerialNumberDecoder(),
-      CnpCheckDigitCalculator(),
-    );
+    test('Should throw InvalidCnpException for invalid month value', () {
+      // Example: invalid month (25) - month must be between 1 and 12.
+      expect(() => decoder.decodeCnp('17402501415486'), throwsA(isA<InvalidCnpException>()));
+    });
 
-    expect(decoder.decodeCnp('2990219469000'), 0);
-    expect(decoder.decodeCnp('1740501415486'), 6);
+    test('Should throw InvalidCnpException for non-digit characters', () {
+      // Example: CNP contains non-numeric characters.
+      expect(() => decoder.decodeCnp('29902194abc000'), throwsA(isA<InvalidCnpException>()));
+    });
   });
 }

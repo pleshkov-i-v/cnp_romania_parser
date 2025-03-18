@@ -5,12 +5,17 @@ import 'package:cnp_romania_parser/src/internal/parser/cnp_parsing_internal_resu
 
 class CnpCountyDecoder {
   const CnpCountyDecoder();
+
+  /// Decodes the county information from the parsed CNP result.
+  /// Throws [InvalidCnpException] if the county code is invalid.
   CnpCounty decode(CnpParsingInternalResult parsingResult) {
-    try {
-      final countyCode = parsingResult.jj;
-      return CnpCountyMap.map[countyCode]!;
-    } catch (e) {
-      throw InvalidCnpException();
+    final countyCode = parsingResult.jj;
+    final county = CnpCountyMap.map[countyCode];
+
+    if (county == null) {
+      throw InvalidCnpException('Invalid county code: $countyCode');
     }
+
+    return county;
   }
 }

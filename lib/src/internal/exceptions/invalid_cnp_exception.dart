@@ -1,1 +1,5 @@
-class InvalidCnpException implements Exception {}
+class InvalidCnpException implements Exception {
+  final dynamic message;
+
+  InvalidCnpException([this.message]);
+}
